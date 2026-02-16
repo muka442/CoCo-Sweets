@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoCo Sweets | Handcrafted Deserts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #00b4fb;
+            /* Vibrant pink from strawberries */
+            --secondary-color: #6f42c1;
+            /* Deep purple accent */
+            --text-color: #333;
+            --bg-color: #76d6fc;
+            --hero-bg: #76d6fc;
+            /* Light grey/white for clean look like reference */
+            --font-main: 'Roboto', sans-serif;
+            --font-headline: 'Oswald', sans-serif;
+            --spacing-unit: 1rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Font Override */
+        .hero-headline,
+        .logo,
+        .cta-button-large,
+        .cta-button-small,
+        nav a {
+            font-family: var(--font-headline);
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            z-index: 1001;
+            /* Ensure logo is above mobile menu */
+        }
+
+        /* Nav Toggle Button (Hamburger) */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            color: var(--text-color);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            /* Touch target */
+        }
+
+        nav a.active {
+            color: var(--primary-color);
+        }
+
+        .cta-button-small {
+            background-color: #000;
+            color: #fff;
+            padding: 0.75rem 1.25rem;
+            /* Larger touch target */
+            border-radius: 4px;
+            /* Slight rounding */
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+        }
+
+        .cta-button-small:hover {
+            opacity: 0.8;
+        }
+
+        /* Mobile Nav Styles */
+        @media (max-width: 768px) {
+            .nav-toggle {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background-color: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease-in-out;
+                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+                padding-top: 60px;
+                /* Space for close button */
+                gap: 2rem;
+            }
+
+            nav.nav-open {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            nav li {
+                width: 100%;
+                text-align: center;
+            }
+
+            nav a {
+                display: block;
+                font-size: 1.5rem;
+                padding: 1rem;
+                width: 100%;
+            }
+
+            .cta-button-small {
+                margin-top: 1rem;
+                width: 80%;
+                text-align: center;
+            }
+
+            /* Overlay when menu is open */
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4rem 2rem;
+            background-color: var(--hero-bg);
+            min-height: 80vh;
+            gap: 2rem;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 50%;
+            padding-left: 4rem;
+        }
+
+        .hero-headline {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            /* Fluid Typography */
+            line-height: 1.1;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+            text-transform: uppercase;
+        }
+
+        .hero-subtext {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: #666;
+            margin-bottom: 2.5rem;
+            max-width: 400px;
+        }
+
+        .cta-button-large {
+            display: inline-block;
+            background-color: #000;
+            color: #fff;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .cta-button-large:hover {
+            transform: scale(1.05);
+        }
+
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.15));
+            max-height: 600px;
+        }
+
+        /* Responsive Hero */
+        @media (max-width: 968px) {
+            .hero {
+                flex-direction: column-reverse;
+                /* Image on top */
+                text-align: center;
+                padding: 2rem 1rem;
+                justify-content: center;
+                min-height: auto;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                padding-left: 0;
+            }
+
+            .hero-subtext {
+                margin: 0 auto 2rem auto;
+            }
+
+            .hero-image {
+                max-width: 80%;
+                /* Smaller image on mobile */
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* Responsive Sections Generic */
+        .section-title {
+            font-family: var(--font-headline);
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 4rem 2rem;
+            text-align: center;
+            background-color: #76d6fc;
+        }
+
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-image {
+            max-width: 100%;
+            width: 48%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .menu-image {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .menu-section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Order Now Section - Enhanced Grid */
+        .order-section {
+            padding: 4rem 2rem;
+            background-color: #76d6fc;
+            text-align: center;
+        }
+
+        .category-title {
+            font-family: var(--font-headline);
+            font-size: clamp(1.8rem, 3vw, 2.2rem);
+            margin: 3rem 0 1.5rem;
+            text-transform: uppercase;
+            color: var(--text-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 10px auto 0;
+        }
+
+        .order-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            /* Responsive Grid */
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            justify-items: center;
+            /* Center items in their grid cells */
+        }
+
+        .order-card {
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            /* Fill the grid cell */
+            max-width: 300px;
+            /* But don't get too strictly wide */
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            /* Touch target optimization */
+            position: relative;
+        }
+
+        .order-card:active {
+            transform: scale(0.98);
+            /* Visual feedback on touch */
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-image-container {
+            height: 180px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .order-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.1));
+        }
+
+        .card-details {
+            width: 100%;
+            text-align: center;
+        }
+
+        .item-name {
+            font-family: var(--font-headline);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+            text-transform: uppercase;
+        }
+
+        .item-price {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Video Section Styles */
+        .video-section {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            margin-top: 40px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 60vh;
+            min-height: 300px;
+            /* Reduced min-height for mobile */
+            background-color: #000;
+        }
+
+        #promo-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            pointer-events: none;
+        }
+
+        .overlay-logo {
+            width: clamp(60px, 15vw, 100px);
+            /* Responsive logo size */
+            height: clamp(60px, 15vw, 100px);
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 3px solid #fff;
+            object-fit: cover;
+        }
+
+        .overlay-text {
+            font-family: var(--font-headline);
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            /* Responsive text */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            padding: 0 1rem;
+        }
+
+        .unmute-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: 2px solid white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-main);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+            z-index: 10;
+            font-size: 0.9rem;
+            /* Slightly larger text */
+        }
+
+        /* Single Page Application Logic */
+        .section-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin-top: auto;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="overlay" id="nav-overlay" onclick="toggleMenu()"></div>
+
+    <header>
+        <div class="logo" onclick="switchSection('home')">CoCo <span style="color:#000000;">Sweets</span></div>
+        <button class="nav-toggle" onclick="toggleMenu()" aria-label="Toggle Menu">
+            ☰
+        </button>
+        <nav id="main-nav">
+            <ul>
+                <li><a id="nav-home" onclick="switchSection('home')" class="active">Home</a></li>
+                <li><a id="nav-menu" onclick="switchSection('menu')">Menu</a></li>
+                <li><a id="nav-location" onclick="switchSection('location')">Location</a></li>
+            </ul>
+            <a id="nav-order" onclick="switchSection('order')" class="cta-button-small">What We Offer</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <div id="home-section" class="section-content active">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-headline">INDULGENCE<br>NEVER TASTED SO<br>FRESH</h1>
+                    <p class="hero-subtext">
+                        Choose from our daily handcrafted flavors made with organic milk and locally sourced fruits.
+                        Simple ingredients, extraordinary taste.
+                    </p>
+                    <a onclick="switchSection('order')" class="cta-button-large">What We Offer</a>
+                </div>
+                <div class="hero-image-container">
+                    <img src="images/logo.jpeg" alt="Delicious Strawberry and Chocolate Ice Cream Sundae"
+                        class="hero-image">
+                </div>
+            </section>
+
+            <section class="video-section">
+                <div class="video-container">
+                    <video id="promo-video" loop muted playsinline>
+                        <source src="videos/video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay">
+                        <img src="images/logo.jpeg" alt="CoCo Sweets Logo" class="overlay-logo">
+                        <h2 class="overlay-text">IT'S SWEET IT'S COCO</h2>
+                    </div>
+                </div>
+                <button id="unmute-btn" class="unmute-btn" aria-label="Unmute Video">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11 5L6 9H2V15H6L11 19V5Z" fill="white" />
+                        <path
+                            d="M19.07 4.93L17.66 6.34C18.52 7.11 19.33 7.96 20.04 8.91L21.49 7.46C20.73 6.55 19.93 5.7 19.07 4.93Z"
+                            fill="white" />
+                        <path
+                            d="M15.54 8.46L14.13 9.87C14.65 10.45 15.08 11.09 15.42 11.77L16.91 11.14C16.51 10.19 15.99 9.3 15.35 8.46H15.54Z"
+                            fill="white" />
+                    </svg>
+                    Unmute
+                </button>
+            </section>
+        </div>
+
+        <!-- Menu Section -->
+        <div id="menu-section" class="section-content">
+            <section class="menu-section">
+                <h1 class="section-title">Our Menu</h1>
+                <div class="menu-container">
+                    <img src="images/menu_page_1.png" alt="Menu Page 1 - Desserts and Boba" class="menu-image">
+                    <img src="images/menu_page_2.png" alt="Menu Page 2 - Ice Creams and Shakes" class="menu-image">
+                </div>
+            </section>
+        </div>
+
+        <!-- Location Section -->
+        <div id="location-section" class="section-content">
+            <section class="menu-section">
+                <h1 class="section-title">Where to Find Us</h1>
+                <div class="menu-container">
+                    <img src="images/WhatsApp Image 2025-12-17 at 8.23.31 PM.jpeg" alt="Map Location of CoCo Sweets"
+                        class="menu-image" style="width: 80%; cursor: pointer;"
+                        onclick="window.open('https://www.google.com/maps/search/mehria+town+phase+5+attock/@33.8144844,72.3477422,17.61z?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D', '_blank')">
+                </div>
+                <p style="margin-top: 2rem; font-size: 1.2rem; text-align: center;">Phase 5, Mehria Town Attock, 43600,
+                    Pakistan</p>
+            </section>
+        </div>
+
+        <!-- Order Section -->
+        <div id="order-section" class="section-content">
+            <section class="order-section">
+                <h1 class="section-title">What We Offer</h1>
+
+                <!-- Ice Cream (Content duplicated from original, structured for grid) -->
+                <h2 class="category-title">Ice Cream</h2>
+                <div class="order-grid">
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/mango-icecream.png" alt="Mango Ice Cream" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Mango Ice Cream</h3>
+                            <p class="item-price">PKR 150-400</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/blueberry-icecream.png" alt="Blueberry Ice Cream" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Blueberry Ice Cream</h3>
+                            <p class="item-price">PKR 150-400</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/chocolate icecream.png" alt="Chocolate Ice Cream" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Chocolate Ice Cream</h3>
+                            <p class="item-price">PKR 150-400</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/Vanilla icecream.png" alt="Vanilla Ice Cream" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Vanilla Ice Cream</h3>
+                            <p class="item-price">PKR 150-400</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/Kulfa icecream.png" alt="Kulfa Ice Cream" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Kulfa Ice Cream</h3>
+                            <p class="item-price">PKR 150-400</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desserts -->
+                <h2 class="category-title">Desserts</h2>
+                <div class="order-grid">
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/molten-lava.png" alt="Molten Lava" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Molten Lava</h3>
+                            <p class="item-price">PKR 450</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/iced-brownie.png" alt="Iced Brownie" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Iced Brownie</h3>
+                            <p class="item-price">PKR 350</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/cookie.png" alt="Cookie" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Cookie</h3>
+                            <p class="item-price">PKR 250</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/kunafa.png" alt="Kunafa" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Kunafa</h3>
+                            <p class="item-price">PKR 500</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shakes -->
+                <h2 class="category-title">Shakes</h2>
+                <div class="order-grid">
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/red-velvet-shake.png" alt="Red Velvet Shake" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Red Velvet Shake</h3>
+                            <p class="item-price">PKR 400-500</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/chocolate-shake.png" alt="Chocolate Shake" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Chocolate Shake</h3>
+                            <p class="item-price">PKR 400-500</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/lotus-shake.png" alt="Lotus Shake" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Lotus Shake</h3>
+                            <p class="item-price">PKR 400-500</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/pista-shake.png" alt="Pista Shake" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Pista Shake</h3>
+                            <p class="item-price">PKR 400-500</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/oreo-shake.png" alt="Oreo Shake" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Oreo Shake</h3>
+                            <p class="item-price">PKR 400-500</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h2 class="category-title">Boba Shakes</h2>
+                <div class="order-grid">
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/blueberry-boba.png" alt="Blueberry Boba" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Blueberry Boba</h3>
+                            <p class="item-price">PKR 450</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/red-velvet-boba.png" alt="Red Velvet Boba" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Strawberry Boba</h3>
+                            <p class="item-price">PKR 450</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/green-apple-boba.png" alt="Green Apple Boba" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Green Apple Boba</h3>
+                            <p class="item-price">PKR 450</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/mango-boba.png" alt="Mango Boba" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Mango Boba</h3>
+                            <p class="item-price">PKR 450</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coffees -->
+                <h2 class="category-title">Coffees</h2>
+                <div class="order-grid">
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/americano.png" alt="Americano" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Iced Americano</h3>
+                            <p class="item-price">PKR 250</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/cappuccino.png" alt="Cappuccino" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Iced Cappuccino</h3>
+                            <p class="item-price">PKR 350</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/mocha.png" alt="Mocha" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Iced Mocha</h3>
+                            <p class="item-price">PKR 350</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/hot-mocha.png" alt="Hot Mocha" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Hot Coffee</h3>
+                            <p class="item-price">PKR 150-450</p>
+                        </div>
+                    </div>
+                    <div class="order-card">
+                        <div class="card-image-container">
+                            <img src="images/iced-caramel-latte.png" alt="Iced Caramel Latte" class="order-image">
+                        </div>
+                        <div class="card-details">
+                            <h3 class="item-name">Iced Caramel Latte</h3>
+                            <p class="item-price">PKR 450</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CoCo Sweets. All rights reserved.<br>Made by Mukaram,Aalayan,Ayesha and Jalees</p>
+    </footer>
+
+    <script>
+        // Use Global state for section management needed for toggle
+        let currentSection = 'home';
+
+        // Toggle Menu for Mobile
+        function toggleMenu() {
+            const nav = document.getElementById('main-nav');
+            const overlay = document.getElementById('nav-overlay');
+            const isOpen = nav.classList.contains('nav-open');
+
+            if (isOpen) {
+                nav.classList.remove('nav-open');
+                overlay.classList.remove('active');
+            } else {
+                nav.classList.add('nav-open');
+                overlay.classList.add('active');
+            }
+        }
+
+        // Close menu if a link is clicked
+        function closeMenu() {
+            const nav = document.getElementById('main-nav');
+            const overlay = document.getElementById('nav-overlay');
+            nav.classList.remove('nav-open');
+            overlay.classList.remove('active');
+        }
+
+        // Navigation Logic
+        function switchSection(sectionName) {
+            // Hide all sections logic
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(siteSection => {
+                siteSection.classList.remove('active');
+            });
+
+            // Show target section
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Update nav active state
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            // Highlight current nav item
+            const activeNav = document.getElementById('nav-' + sectionName);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+
+            // Close mobile menu on switch
+            closeMenu();
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Existing Video Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('promo-video');
+            const unmuteBtn = document.getElementById('unmute-btn');
+
+            // Intersection Observer for Scroll-to-Play
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5 // Play when 50% visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        video.play().catch(error => {
+                            console.log("Autoplay prevented:", error);
+                        });
+                    } else {
+                        video.pause();
+                    }
+                });
+            }, observerOptions);
+
+            if (video) {
+                observer.observe(video);
+            }
+
+            // Mute/Unmute Logic
+            if (unmuteBtn && video) {
+                unmuteBtn.addEventListener('click', () => {
+                    video.muted = !video.muted;
+                    unmuteBtn.innerHTML = video.muted ?
+                        `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 5L6 9H2V15H6L11 19V5Z" fill="white"/><path d="M23 9L21.59 7.59L19 10.17L16.41 7.59L15 9L17.59 11.59L15 14.17L16.41 15.59L19 13L21.59 15.59L23 14.17L20.41 11.59L23 9Z" fill="white"/></svg> Unmute` :
+                        `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 5L6 9H2V15H6L11 19V5Z" fill="white"/><path d="M19.07 4.93L17.66 6.34C18.52 7.11 19.33 7.96 20.04 8.91L21.49 7.46C20.73 6.55 19.93 5.7 19.07 4.93Z" fill="white"/><path d="M15.54 8.46L14.13 9.87C14.65 10.45 15.08 11.09 15.42 11.77L16.91 11.14C16.51 10.19 15.99 9.3 15.35 8.46H15.54Z" fill="white"/></svg> Mute`;
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
